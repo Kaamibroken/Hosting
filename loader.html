@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Silent Hosting - Developed by Nothing Is Impossible</title>
+
+  <meta name="description" content="Deploy your Telegram bots, WhatsApp bots, Python, Go, Rust, and Node.js projects for free on Silent Hosting (Nothing Is Impossible). Experience high-performance cloud hosting with instant Docker builds, 24/7 uptime, and seamless custom domain deployment. The ultimate developer-friendly platform for free bot hosting and app deployment.">
+  <meta name="keywords" content="silent hosting, silenthost.site, silent host, silent hosting free, Telegram Bot Free Deploy, TG Bot Deploy Free, Python free Deploy, WhatsApp Bot Deploy, free telegram bot hosting, deploy go language, rust hosting free, docker build hosting, free bot deployment, nodejs deploy free, php hosting, cloud hosting, web hosting pakistan, free developer hosting, fast deployment platform, 24/7 online hosting">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Nothing is Impossible">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://silenthost.site/logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://silenthost.site/logo.png">
+  <link rel="shortcut icon" href="https://silenthost.site/logo.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="https://silenthost.site/logo.png">
+  
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  <link rel="manifest" href="https://silenthost.site/manifest.json">
+
+  <meta property="og:site_name" content="Silent Hosting - Developed By Nothing Is Impossible">
+  <meta property="og:title" content="Silent Hosting - Developed By Nothing Is Impossible">
+  <meta property="og:description" content="Deploy Telegram bots, WhatsApp bots, Python, and Go apps instantly with Docker support. 24/7 Online and completely free (Nothing Is Impossible).">
+  <meta property="og:url" content="https://silenthost.site">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://silenthost.site/logo.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Silent Hosting - Developed By Nothing Is Impossible">
+  <meta name="twitter:description" content="Free hosting for Telegram/WhatsApp bots, Python, Go, and Rust apps. 24/7 Uptime guaranteed (Nothing Is Impossible).">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Silent Hosting",
+    "alternateName": "SilentHost",
+    "url": "https://silenthost.site/"
+  }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght=500;800;900&family=Rajdhani:wght=500;700&display=swap');
+
+    body, html { 
+      background-color: #03030c; 
+      height: 100%; 
+      margin: 0; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      overflow: hidden; 
+      font-family: 'Rajdhani', sans-serif;
+      color: #fff;
+    }
+
+    .vip-loader-container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4vw; 
+      padding: 20px;
+      width: 90%;
+      max-width: 600px; 
+      box-sizing: border-box;
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.2rem, 8vw, 4rem); 
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: clamp(3px, 1.2vw, 8px);
+      margin: 0;
+      position: relative;
+      color: #45F3FF;
+      text-shadow: 0 0 15px rgba(69, 243, 255, 0.6),
+                   0 0 30px rgba(69, 243, 255, 0.4);
+      animation: pulse 2s infinite alternate, glitch 3s infinite;
+      line-height: 1.2;
+    }
+
+    .logo-loader-wrapper {
+      position: relative;
+      width: clamp(75px, 16vw, 90px);
+      height: clamp(75px, 16vw, 90px);
+      margin: 15px 0;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #03030c;
+    }
+
+    .loader-logo-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.45);
+      border-radius: 50%;
+    }
+
+    .spinning-loader-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 5px solid rgba(69, 243, 255, 0.1);
+      border-top-color: #45F3FF;
+      border-bottom-color: #FF007F;
+      border-radius: 50%;
+      box-sizing: border-box;
+      animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+      box-shadow: 0 0 25px rgba(69, 243, 255, 0.5), 0 0 40px rgba(255, 0, 127, 0.3);
+      pointer-events: none;
+    }
+
+    .tech-stack {
+      font-size: clamp(0.85rem, 2.8vw, 1.1rem);
+      color: #a0a0c0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: rgba(69, 243, 255, 0.05);
+      padding: 10px 18px;
+      border-radius: 15px;
+      border: 1px solid rgba(69, 243, 255, 0.2);
+      box-shadow: inset 0 0 15px rgba(69, 243, 255, 0.05);
+      width: 100%;
+      white-space: normal; 
+      word-spacing: 2px;
+    }
+
+    .tech-stack span {
+      color: #FF007F;
+      font-weight: 700;
+      margin: 0 3px;
+    }
+
+    .tagline {
+      font-size: clamp(1.1rem, 3.8vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #e0e0ff;
+      margin: 5px 0;
+      line-height: 1.4;
+    }
+
+    .status-247 {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(45deg, #00FF87, #60EFFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+      letter-spacing: 1px;
+      animation: blink 1.2s infinite;
+    }
+
+    .developer-credit {
+      margin-top: 20px;
+      font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .developer-name {
+      color: #00FF87;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(0, 255, 135, 0.4);
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { text-shadow: 0 0 10px rgba(69, 243, 255, 0.6), 0 0 20px rgba(69, 243, 255, 0.4); }
+      100% { text-shadow: 0 0 25px rgba(69, 243, 255, 0.9), 0 0 50px rgba(255, 0, 127, 0.6); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(0,255,135,0.6)); }
+      50% { opacity: 0.5; filter: drop-shadow(0 0 2px rgba(0,255,135,0.1)); }
+    }
+
+    @keyframes glitch {
+      0%, 95%, 100% { transform: skew(0deg); }
+      96% { transform: skew(-4deg); color: #FF007F; }
+      97% { transform: skew(4deg); color: #00FF87; }
+      98% { transform: skew(-1deg); }
+      99% { transform: skew(1deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="vip-loader-container" id="loader">
+    
+    <h1 class="brand-title">Silent Hosting</h1>
+    
+    <div class="logo-loader-wrapper">
+      <img src="logo.png" class="loader-logo-image" alt="Silent Hosting Logo">
+      <div class="spinning-loader-border"></div>
+    </div>
+    
+    <div class="tech-stack">
+      Docker <span>•</span> Node.js <span>•</span> Python <span>•</span> Go <span>•</span> Rust <span>•</span> PHP <span>•</span> Static
+    </div>
+    
+    <div class="tagline">
+      Build Your Any Bot Or Website For <span style="color: #45F3FF; font-weight:800;">FREE</span>
+    </div>
+    
+    <div class="status-247">
+      ⚡ 24/7 ONLINE ⚡
+    </div>
+    
+    <div class="developer-credit">
+      Development by <span class="developer-name">Nothing is Impossible</span>
+    </div>
+    
+  </div>
+
+  <link rel="preload" href="flutter_bootstrap.js" as="script" fetchpriority="high">
+
+  <script>
+    (function() {
+      const script = document.createElement('script');
+      script.src = 'flutter_bootstrap.js';
+      script.async = true;
+      script.setAttribute('fetchpriority', 'high'); 
+      window.addEventListener('flutter-first-frame', function() {
+        var loader = document.getElementById('loader');
+        if(loader) { 
+          loader.style.transition = 'opacity 0.3s ease';
+          loader.style.opacity = '0';
+          setTimeout(function() { loader.remove(); }, 300);
+        }
+      });
+
+      document.body.appendChild(script);
+    })();
+  </script>
+</body>
+</html>

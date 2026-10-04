@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pro Mobile IDE</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.2/ace.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body { margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; background: #1a1a24; overflow: hidden; }
+        #toolbar { flex-shrink: 0; background: #0f111a; display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; border-bottom: 1px solid rgba(69, 243, 255, 0.2); z-index: 1001; }
+        #editor { flex-grow: 1; width: 100%; position: relative; background: #141622; }
+        
+        /* Enforce absolute monospace encoding rendering for VIP borders and box characters */
+        #editor, #editor * { font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', 'Monaco', 'Consolas', monospace !important; }
+        
+        #search-panel { position: absolute; top: 45px; left: 0; right: 0; background: #1c1e2e; padding: 10px; z-index: 1000; display: none; border-bottom: 2px solid #45F3FF; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        .row { display: flex; gap: 8px; margin-bottom: 5px; }
+        input { flex: 1; background: #0f111a; border: 1px solid rgba(69, 243, 255, 0.3); color: white; padding: 8px; border-radius: 6px; font-family: monospace; outline: none; }
+        input:focus { border-color: #45F3FF; }
+        button { background: rgba(69, 243, 255, 0.15); border: 1px solid #45F3FF; color: #45F3FF; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #45F3FF; color: black; }
+        .icon-btn { background: none; border: none; color: #a6accd; font-size: 16px; padding: 5px 10px; cursor: pointer; transition: 0.2s; }
+        .icon-btn:hover { color: #45F3FF; }
+    </style>
+</head>
+<body>
+
+    <div id="toolbar">
+        <div style="display:flex; gap: 5px;">
+            <button class="icon-btn" onclick="undo()" title="Undo"><i class="fas fa-undo"></i></button>
+            <button class="icon-btn" onclick="redo()" title="Redo"><i class="fas fa-redo"></i></button>
+        </div>
+        <div style="display:flex; gap: 5px;">
+            <button class="icon-btn" onclick="toggleSearch()" style="color:#34D399;" title="Find"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <div id="search-panel">
+        <div class="row">
+            <input type="text" id="findInput" placeholder="Find string...">
+            <button onclick="findNext()">Next</button>
+            <button onclick="toggleReplace()" style="border-color: amber; color: amber;">Replace</button>
+        </div>
+        <div id="replace-row" class="row" style="display:none;">
+            <input type="text" id="replaceInput" placeholder="Replace with...">
+            <button onclick="replace()">Replace</button>
+            <button onclick="replaceAll()" style="border-color: #ff5370; color: #ff5370;">All</button>
+        </div>
+    </div>
+
+    <div id="editor"></div>
+
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/text");
+        
+        // Configured for VIP Unicode and Layout Stabilization
+        editor.setOptions({ 
+            fontSize: "14px", 
+            wrap: false, 
+            showPrintMargin: false,
+            fontFamily: "JetBrains Mono, Fira Code, Menlo, Monaco, Consolas, monospace",
+            indentedSoftWrap: false
+        });
+        editor.renderer.setScrollMargin(0, 200, 0, 0);
+
+        let currentSize = 14;
+        let initialDist = 0;
+        editor.container.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                initialDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            }
+        }, {passive: true});
+
+        editor.container.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                let dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                if (dist > initialDist + 30) { currentSize += 1; editor.setFontSize(currentSize + "px"); initialDist = dist; }
+                else if (dist < initialDist - 30) { if(currentSize > 9) currentSize -= 1; editor.setFontSize(currentSize + "px"); initialDist = dist; }
+            }
+        }, {passive: true});
+
+        // Fixed Double-Click Bug: Instant single-click execution
+        function toggleSearch() {
+            let panel = document.getElementById('search-panel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+                document.getElementById('findInput').focus();
+            }
+        }
+
+        function toggleReplace() {
+            let row = document.getElementById('replace-row');
+            row.style.display = (row.style.display === 'none') ? 'flex' : 'none';
+        }
+
+        function findNext() { editor.find(document.getElementById('findInput').value); }
+        function replace() { editor.replace(document.getElementById('replaceInput').value); }
+        function replaceAll() { editor.replaceAll(document.getElementById('replaceInput').value); }
+        
+        function undo() { editor.undo(); }
+        function redo() { editor.redo(); }
+        
+        // Retained background synchronization logic perfectly intact
+        function save() { 
+            window.parent.postMessage({action: 'save', code: editor.getValue()}, '*'); 
+        }
+
+        window.addEventListener('message', function(event) {
+            if (event.data.action === 'load') {
+                editor.setValue(event.data.code, -1);
+                var mode = event.data.mode || "text";
+                editor.session.setMode("ace/mode/" + mode);
+            }
+            if (event.data.action === 'request_save') {
+                window.parent.postMessage({action: 'save', code: editor.getValue()}, '*');
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('direct_load')) {
+            var cachedCode = sessionStorage.getItem("silent_editor_blob");
+            var cachedMode = sessionStorage.getItem("silent_editor_mode");
+            if (cachedCode) {
+                editor.setValue(cachedCode, -1);
+                editor.session.setMode("ace/mode/" + (cachedMode || "text"));
+            }
+        }
+    </script>
+</body>
+</html>
